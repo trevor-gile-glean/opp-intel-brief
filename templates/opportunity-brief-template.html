@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<parameter name="content"><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opportunity Intelligence Brief — {{CUSTOMER_NAME}}</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --artifact-background: var(--theme-background, #ffffff);
+  --artifact-background-light: var(--theme-background-light, #f6f6f6);
+  --artifact-background-mid: var(--theme-background-mid, #f0f0f0);
+  --artifact-border-light: var(--theme-border-light, #e5e5e5);
+  --artifact-border-dark: var(--theme-border-dark, #cccccc);
+  --artifact-primary-brand: var(--theme-primary-brand, #343ced);
+  --artifact-primary-highlight: var(--theme-primary-highlight, #1b1b1b);
+  --artifact-primary-hover: var(--theme-primary-hover, #404040);
+  --artifact-selected: var(--theme-selected, #e8e8e8);
+  --artifact-text-primary: var(--theme-text-primary, #1b1b1b);
+  --artifact-text-secondary: var(--theme-text-secondary, #727272);
+  --artifact-text-highlight: var(--theme-text-highlight, #fff8e5);
+
+  /* Semantic status colors */
+  --status-green-bg: #e8f5e9;
+  --status-green-text: #1b5e20;
+  --status-yellow-bg: #fff8e1;
+  --status-yellow-text: #5c3a00;
+  --status-red-bg: #fce4ec;
+  --status-red-text: #880e4f;
+  --status-blue-bg: #e3f2fd;
+  --status-blue-text: #0d47a1;
+  --status-purple-bg: #f3e5f5;
+  --status-purple-text: #4a148c;
+  --status-gray-bg: #f5f5f5;
+  --status-gray-text: #424242;
+
+  /* Chart accent colors */
+  --accent-indigo: #343ced;
+  --accent-amber: #f59e0b;
+  --accent-rose: #e11d48;
+  --accent-emerald: #10b981;
+  --accent-violet: #8b5cf6;
+  --accent-orange: #ef601b;
+}
+html[data-theme='dark'] {
+  --status-green-bg: #1b3a1d;
+  --status-green-text: #a5d6a7;
+  --status-yellow-bg: #3a2e00;
+  --status-yellow-text: #ffe082;
+  --status-red-bg: #3a0a1a;
+  --status-red-text: #f48fb1;
+  --status-blue-bg: #0d2a3a;
+  --status-blue-text: #90caf9;
+  --status-purple-bg: #2a0e3a;
+  --status-purple-text: #ce93d8;
+  --status-gray-bg: #2a2a2a;
+  --status-gray-text: #bdbdbd;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--artifact-background);
+  color: var(--artifact-text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ─── Layout ─── */
+.page { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* ─── Header ─── */
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding-bottom: 20px; border-bottom: 2px solid var(--artifact-border-light);
+  margin-bottom: 28px; flex-wrap: wrap;
+}
+.header-left h1 {
+  font-size: 22px; font-weight: 700; color: var(--artifact-text-primary);
+  display: flex; align-items: center; gap: 10px;
+}
+.header-left .subtitle { color: var(--artifact-text-secondary); font-size: 13px; margin-top: 4px; }
+.glean-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--artifact-primary-brand); color: #fff;
+  border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.date-badge {
+  font-size: 12px; color: var(--artifact-text-secondary);
+  background: var(--artifact-background-mid); border-radius: 6px; padding: 4px 10px;
+}
+
+/* ─── Nav Tabs ─── */
+.tabs { display: flex; gap: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab {
+  padding: 8px 14px; border-radius: 7px; font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1px solid transparent;
+  background: var(--artifact-background-mid);
+  color: var(--artifact-text-secondary);
+  transition: background .15s, color .15s, border-color .15s;
+}
+.tab:hover { background: var(--artifact-selected); color: var(--artifact-text-primary); }
+.tab.active {
+  background: var(--artifact-primary-brand); color: #fff;
+  border-color: var(--artifact-primary-brand);
+}
+
+/* ─── Sections ─── */
+.section { display: none; }
+.section.active { display: block; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Title ─── */
+.section-title {
+  font-size: 16px; font-weight: 700; color: var(--artifact-text-primary);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.section-title .icon { font-size: 18px; }
+
+/* ─── Deal Snapshot ─── */
+.snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.snapshot-card {
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; padding: 14px 16px;
+}
+.snapshot-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--artifact-text-secondary); margin-bottom: 4px; }
+.snapshot-card .value { font-size: 15px; font-weight: 700; color: var(--artifact-text-primary); }
+.snapshot-card .sub { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 2px; }
+
+/* ─── Stage Progress ─── */
+.stage-bar { display: flex; gap: 4px; margin-bottom: 20px; }
+.stage-step {
+  flex: 1; height: 6px; border-radius: 99px;
+  background: var(--artifact-border-light);
+  transition: background .3s;
+}
+.stage-step.done { background: var(--accent-emerald); }
+.stage-step.current { background: var(--accent-amber); }
+.stage-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--artifact-text-secondary); margin-bottom: 4px; }
+
+/* ─── Tags ─── */
+.tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 99px; font-size: 12px; font-weight: 500;
+}
+.tag-green { background: var(--status-green-bg); color: var(--status-green-text); }
+.tag-yellow { background: var(--status-yellow-bg); color: var(--status-yellow-text); }
+.tag-red { background: var(--status-red-bg); color: var(--status-red-text); }
+.tag-blue { background: var(--status-blue-bg); color: var(--status-blue-text); }
+.tag-purple { background: var(--status-purple-bg); color: var(--status-purple-text); }
+.tag-gray { background: var(--status-gray-bg); color: var(--status-gray-text); }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
+}
+.card-title { font-size: 14px; font-weight: 700; color: var(--artifact-text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.card-body { font-size: 13px; color: var(--artifact-text-secondary); line-height: 1.65; }
+.card-body ul { padding-left: 18px; }
+.card-body li { margin-bottom: 5px; }
+.card-body strong { color: var(--artifact-text-primary); }
+
+/* ─── Stakeholder Grid ─── */
+.stakeholder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.stakeholder-card {
+  border: 1px solid var(--artifact-border-light); border-radius: 10px;
+  padding: 14px 16px; background: var(--artifact-background-light);
+  border-left: 4px solid transparent;
+}
+.stakeholder-card.champion { border-left-color: var(--accent-emerald); }
+.stakeholder-card.economic { border-left-color: var(--accent-indigo); }
+.stakeholder-card.technical { border-left-color: var(--accent-amber); }
+.stakeholder-card.risk { border-left-color: var(--accent-rose); }
+.stakeholder-card.neutral { border-left-color: var(--artifact-border-dark); }
+.stakeholder-name { font-size: 14px; font-weight: 700; color: var(--artifact-text-primary); }
+.stakeholder-title { font-size: 12px; color: var(--artifact-text-secondary); margin-bottom: 8px; }
+.stakeholder-notes { font-size: 12px; color: var(--artifact-text-secondary); line-height: 1.5; }
+.stakeholder-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--artifact-text-secondary); }
+.legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+/* ─── Quote Block ─── */
+.quote-block {
+  border-left: 3px solid var(--artifact-primary-brand);
+  background: var(--artifact-background-mid); border-radius: 0 8px 8px 0;
+  padding: 12px 16px; margin: 12px 0;
+  font-size: 13px; font-style: italic; color: var(--artifact-text-primary);
+  line-height: 1.6;
+}
+.quote-attribution { font-style: normal; font-weight: 600; font-size: 12px; color: var(--artifact-text-secondary); margin-top: 6px; }
+
+/* ─── Competitive Matrix ─── */
+.compete-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+.compete-table th {
+  padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px;
+  background: var(--artifact-background-mid); color: var(--artifact-text-primary);
+  border-bottom: 2px solid var(--artifact-border-dark);
+}
+.compete-table td { padding: 10px 12px; border-bottom: 1px solid var(--artifact-border-light); vertical-align: top; }
+.compete-table tr:last-child td { border-bottom: none; }
+.compete-table tr:hover td { background: var(--artifact-background-mid); }
+.win-icon { font-size: 14px; }
+
+/* ─── ROI Stats ─── */
+.roi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.roi-stat {
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; padding: 14px 16px; text-align: center;
+}
+.roi-stat .number { font-size: 24px; font-weight: 700; color: var(--artifact-primary-brand); }
+.roi-stat .label { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 4px; }
+
+/* ─── Use Case Row ─── */
+.usecase-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--artifact-border-light); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.usecase-cell { padding: 14px 16px; font-size: 13px; }
+.usecase-cell:not(:last-child) { border-right: 1px solid var(--artifact-border-light); }
+.usecase-cell.pain { background: var(--status-red-bg); }
+.usecase-cell.solution { background: var(--status-blue-bg); }
+.usecase-cell.outcome { background: var(--status-green-bg); }
+.usecase-cell .uc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; opacity: .7; }
+.usecase-cell.pain .uc-label { color: var(--status-red-text); }
+.usecase-cell.solution .uc-label { color: var(--status-blue-text); }
+.usecase-cell.outcome .uc-label { color: var(--status-green-text); }
+.usecase-cell.pain { color: var(--status-red-text); }
+.usecase-cell.solution { color: var(--status-blue-text); }
+.usecase-cell.outcome { color: var(--status-green-text); }
+
+/* ─── Reference Card ─── */
+.ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.ref-card {
+  border: 1px solid var(--artifact-border-light); border-radius: 10px;
+  padding: 14px 16px; background: var(--artifact-background-light);
+}
+.ref-name { font-size: 14px; font-weight: 700; color: var(--artifact-text-primary); }
+.ref-meta { font-size: 12px; color: var(--artifact-text-secondary); margin-bottom: 8px; }
+.ref-stat { font-size: 13px; font-weight: 600; color: var(--accent-indigo); }
+.ref-note { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 6px; line-height: 1.5; }
+
+/* ─── Next Steps ─── */
+.step-list { list-style: none; padding: 0; }
+.step-item {
+  display: flex; gap: 14px; padding: 12px 16px;
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; margin-bottom: 10px; align-items: flex-start;
+}
+.step-num {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--artifact-primary-brand); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.step-content .step-title { font-size: 13px; font-weight: 700; color: var(--artifact-text-primary); }
+.step-content .step-body { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 3px; line-height: 1.5; }
+.step-content .step-owner { font-size: 11px; font-weight: 600; color: var(--artifact-primary-brand); margin-top: 4px; }
+
+/* ─── Risk Radar ─── */
+.risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.risk-item { border-radius: 10px; padding: 14px 16px; border: 1px solid; }
+.risk-item.high { background: var(--status-red-bg); border-color: var(--accent-rose); color: var(--status-red-text); }
+.risk-item.medium { background: var(--status-yellow-bg); border-color: var(--accent-amber); color: var(--status-yellow-text); }
+.risk-item.low { background: var(--status-blue-bg); border-color: var(--accent-indigo); color: var(--status-blue-text); }
+.risk-title { font-weight: 700; font-size: 13px; margin-bottom: 5px; }
+.risk-body { font-size: 12px; line-height: 1.5; }
+.risk-mitigation { font-size: 11px; font-weight: 600; margin-top: 6px; opacity: .8; }
+
+/* ─── MEDDPICCS ─── */
+.medd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.medd-item { background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light); border-radius: 10px; padding: 14px 16px; }
+.medd-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--artifact-text-secondary); margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+.medd-value { font-size: 13px; color: var(--artifact-text-primary); line-height: 1.5; }
+.score-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.score-green { background: var(--accent-emerald); }
+.score-yellow { background: var(--accent-amber); }
+.score-red { background: var(--accent-rose); }
+
+/* ─── Divider ─── */
+.divider { border: none; border-top: 1px solid var(--artifact-border-light); margin: 20px 0; }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .usecase-row { grid-template-columns: 1fr; }
+  .usecase-cell:not(:last-child) { border-right: none; border-bottom: 1px solid var(--artifact-border-light); }
+  .snapshot-grid { grid-template-columns: 1fr 1fr; }
+  .header { flex-direction: column; }
+}
+
+@media print {
+  body { background: white !important; color: #1b1b1b !important; }
+  .tabs { display: none !important; }
+  .section { display: block !important; page-break-inside: avoid; }
+  .section-title { margin-top: 24pt; }
+  .card, .stakeholder-card, .ref-card, .step-item, .risk-item, .medd-item { break-inside: avoid; }
+  a { text-decoration: none !important; color: inherit !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>{{CUSTOMER_ICON}} {{CUSTOMER_NAME}}</h1>
+      <div class="subtitle">Opportunity Intelligence Brief &nbsp;·&nbsp; {{OWNER_NAME}} &nbsp;·&nbsp; <span id="opp-date">{{REPORT_DATE}}</span></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;">
+      <span class="glean-badge">⚡ Glean Intelligence</span>
+      <span class="date-badge">{{STAGE_SUMMARY}}</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('exec')">Executive Summary</div>
+    <div class="tab" onclick="switchTab('stakeholders')">Stakeholders</div>
+    <div class="tab" onclick="switchTab('competitive')">Competitive Intel</div>
+    <div class="tab" onclick="switchTab('proof')">Proof Points</div>
+    <div class="tab" onclick="switchTab('usecases')">Use Cases</div>
+    <div class="tab" onclick="switchTab('references')">References</div>
+    <div class="tab" onclick="switchTab('risks')">Risks & MEDDPICCS</div>
+    <div class="tab" onclick="switchTab('nextsteps')">Next Steps</div>
+  </div>
+
+  <!-- ═══ EXEC SUMMARY ═══ -->
+  <div class="section active" id="exec">
+    <div class="section-title"><span class="icon">📋</span> Deal Snapshot</div>
+
+    <!-- Stage Bar -->
+    <div class="stage-labels">
+      <span>{{STAGE_1_LABEL}}</span><span>{{STAGE_2_LABEL}}</span><span>{{STAGE_3_LABEL}}</span><span>{{STAGE_4_LABEL}}</span><span>{{STAGE_5_LABEL}}</span><span>Closed</span>
+    </div>
+    <div class="stage-bar">
+      {{STAGE_PROGRESS_HTML}}
+    </div>
+
+    <div class="snapshot-grid">
+      {{SNAPSHOT_CARDS}}
+    </div>
+
+    <div class="section-title" style="margin-top:8px;"><span class="icon">🔥</span> {{BURNING_ISSUES_TITLE}}</div>
+
+    {{BURNING_ISSUES_HTML}}
+
+    <hr class="divider">
+
+    <div class="section-title"><span class="icon">💡</span> Why This Deal Matters Now</div>
+    <div class="card">
+      <div class="card-body">
+        <ul>
+          {{WHY_NOW_BULLETS}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STAKEHOLDERS ═══ -->
+  <div class="section" id="stakeholders">
+    <div class="section-title"><span class="icon">👥</span> Stakeholder Map</div>
+
+    <div class="stakeholder-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-indigo)"></div> Economic Buyer</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-emerald)"></div> Champion/Advocate</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-amber)"></div> Technical Evaluator</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-rose)"></div> Risk / Blocker</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--artifact-border-dark)"></div> Neutral/Unknown</div>
+    </div>
+
+    <div class="stakeholder-grid">
+      {{STAKEHOLDER_CARDS}}
+    </div>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">🧭</span> Internal Decision Process</div>
+    <div class="card">
+      <div class="card-body">
+        {{DECISION_PROCESS_HTML}}
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ COMPETITIVE ═══ -->
+  <div class="section" id="competitive">
+    <div class="section-title"><span class="icon">⚔️</span> Competitive Landscape</div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+      {{COMPETITOR_TAGS}}
+    </div>
+
+    <table class="compete-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          {{COMPETITOR_COLUMNS}}
+          <th>Glean ✅</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{COMPETITIVE_ROWS}}
+      </tbody>
+    </table>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">🪤</span> Trap-Setting Questions</div>
+
+    {{TRAP_QUESTIONS_HTML}}
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">📊</span> Head-to-Head Win Data</div>
+    <div class="roi-grid">
+      {{WIN_DATA_STATS}}
+    </div>
+  </div>
+
+  <!-- ═══ PROOF POINTS ═══ -->
+  <div class="section" id="proof">
+    <div class="section-title"><span class="icon">🏆</span> {{PROOF_TITLE}}</div>
+
+    {{PROOF_INTRO_CARD}}
+
+    <div class="section-title" style="margin-top:4px;"><span class="icon">📈</span> {{PROOF_METRICS_TITLE}}</div>
+    <div class="roi-grid">
+      {{PROOF_METRICS}}
+    </div>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">💵</span> {{ROI_MODEL_TITLE}}</div>
+
+    {{ROI_MODEL_HTML}}
+
+    {{PROOF_QUOTE_BLOCK}}
+  </div>
+
+  <!-- ═══ USE CASES ═══ -->
+  <div class="section" id="usecases">
+    <div class="section-title"><span class="icon">🗺️</span> Use Case & Solution Mapping</div>
+
+    <p style="color:var(--artifact-text-secondary);font-size:13px;margin-bottom:16px;">{{USECASE_PERSONA_NOTE}}</p>
+
+    {{USECASE_ROWS}}
+  </div>
+
+  <!-- ═══ REFERENCES ═══ -->
+  <div class="section" id="references">
+    <div class="section-title"><span class="icon">🌟</span> Customer References & Social Proof</div>
+
+    <p style="color:var(--artifact-text-secondary);font-size:13px;margin-bottom:16px;">{{REFERENCES_NOTE}}</p>
+
+    <div class="ref-grid">
+      {{REFERENCE_CARDS}}
+    </div>
+
+    {{REFERENCES_ACTION_CARD}}
+  </div>
+
+  <!-- ═══ RISKS & MEDDPICCS ═══ -->
+  <div class="section" id="risks">
+    <div class="section-title"><span class="icon">⚠️</span> Deal Risks</div>
+
+    <div class="risk-grid">
+      {{RISK_ITEMS}}
+    </div>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">📐</span> MEDDPICCS Scorecard</div>
+
+    <div class="medd-grid">
+      {{MEDDPICCS_ITEMS}}
+    </div>
+  </div>
+
+  <!-- ═══ NEXT STEPS ═══ -->
+  <div class="section" id="nextsteps">
+    <div class="section-title"><span class="icon">🚀</span> Recommended Next Steps</div>
+
+    <ul class="step-list">
+      {{NEXT_STEPS_ITEMS}}
+    </ul>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">💬</span> {{MESSAGING_TITLE}}</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="quote-block" style="font-style:normal;">
+          {{RECOMMENDED_MESSAGING}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    var tab = document.querySelector('.tab[onclick*="' + id + '"]');
+    var sec = document.getElementById(id);
+    if (tab) tab.classList.add('active');
+    if (sec) sec.classList.add('active');
+  }
+
+  // PDF export
+  window.GleanBridge.postMessage({
+    actionId: 'export-pdf',
+    type: 'glean-add-menu',
+    metadata: { label: 'Export as PDF', icon: 'export' }
+  });
+  window.GleanBridge.onMessage('action', function(data) {
+    if (data.actionId === 'export-pdf') window.print();
+  });
+</script>
+</body>
+</html>

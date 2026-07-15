@@ -1,0 +1,268 @@
+{
+  "skill_name": "opp-intel-brief",
+  "version": "1.0.0",
+  "author": "Glean",
+  "category": "Sales & Revenue",
+  "deployment_type": "skill",
+  "metadata": {
+    "display_name": "Opportunity Intelligence Brief",
+    "short_description": "Exhaustive opportunity research with competitive insights and actionable deal strategies",
+    "long_description": "Comprehensive AI-generated intelligence brief for Salesforce opportunities. Provides competitive analysis, differentiation messaging, customer references, use case mapping, industry intelligence, and actionable recommendations to help AEs advance deals.",
+    "tags": [
+      "sales",
+      "opportunity",
+      "competitive-intelligence",
+      "deal-strategy",
+      "account-research",
+      "salesforce"
+    ],
+    "icon": "\ud83c\udfaf",
+    "estimated_runtime": {
+      "quick": "2 minutes",
+      "standard": "5 minutes",
+      "deep": "10-15 minutes"
+    }
+  },
+  "required_files": [
+    "SKILL.md",
+    "templates/opportunity-brief-template.html",
+    "subskills/competitive-research.md",
+    "subskills/reference-matching.md",
+    "subskills/solution-mapping.md",
+    "subskills/industry-intelligence.md",
+    ".claude/settings.json"
+  ],
+  "optional_files": [
+    "README.md",
+    "deployment.json",
+    ".claude/CLAUDE.md",
+    "templates/opportunity-brief.html",
+    "templates/opportunity-brief-example.html"
+  ],
+  "exclude_patterns": [
+    "*.local.*",
+    ".DS_Store",
+    "node_modules/",
+    "__pycache__/",
+    "*.pyc",
+    ".git/",
+    "*.log"
+  ],
+  "dependencies": {
+    "mcp_servers": [
+      {
+        "name": "glean_default",
+        "required": true,
+        "min_version": "1.0.0",
+        "capabilities": [
+          "search",
+          "read_document",
+          "chat",
+          "employee_search"
+        ],
+        "description": "Primary Glean MCP server for data access and search"
+      }
+    ],
+    "external_skills": [],
+    "tools": []
+  },
+  "required_permissions": {
+    "glean": {
+      "salesforce": {
+        "read": [
+          "opportunities",
+          "accounts",
+          "contacts"
+        ],
+        "reason": "Access opportunity and account data for research"
+      },
+      "search": {
+        "sources": [
+          "salesforce",
+          "confluence",
+          "google_drive",
+          "slack",
+          "gong"
+        ],
+        "reason": "Search for competitive intelligence, references, and solutions"
+      },
+      "knowledge_graph": {
+        "access": true,
+        "reason": "Entity relationship reasoning for account connections"
+      }
+    },
+    "bash": {
+      "commands": [
+        "python",
+        "jq"
+      ],
+      "reason": "Data processing and JSON manipulation"
+    }
+  },
+  "configuration": {
+    "default_depth": "standard",
+    "supported_depths": [
+      "quick",
+      "standard",
+      "deep"
+    ],
+    "default_focus": "all",
+    "supported_focus_areas": [
+      "competitive",
+      "references",
+      "technical",
+      "industry",
+      "all"
+    ],
+    "output_format": "html",
+    "max_competitors": 5,
+    "max_references_quick": 3,
+    "max_references_standard": 7,
+    "max_references_deep": 15
+  },
+  "data_sources": {
+    "primary": [
+      "Salesforce (opportunities, accounts, contacts)",
+      "Competitive Intelligence collection",
+      "Customer case studies and references",
+      "Solution briefs and positioning docs",
+      "Industry decks and presentations"
+    ],
+    "secondary": [
+      "Gong call transcripts",
+      "Slack channels (#competitive, #sales, #customer-success)",
+      "Win/loss analysis",
+      "Product documentation",
+      "Analyst reports"
+    ]
+  },
+  "output": {
+    "type": "html_artifact",
+    "template": "templates/opportunity-brief-template.html",
+    "example": "templates/opportunity-brief-example.html",
+    "branding": {
+      "colors": {
+        "primary": "#343CED",
+        "accent": "#D8FD49",
+        "background": "#F6F3EB"
+      },
+      "fonts": {
+        "primary": "PolySans",
+        "fallback": "DM Sans"
+      }
+    },
+    "sections": [
+      "Executive Summary",
+      "Stakeholders",
+      "Competitive Intelligence",
+      "Proof Points",
+      "Use Case & Solution Mapping",
+      "Customer References & Social Proof",
+      "Risks & MEDDPICCS",
+      "Next Steps"
+    ]
+  },
+  "quality_metrics": {
+    "min_competitors_researched": 1,
+    "min_references_found": 2,
+    "min_use_cases_mapped": 1,
+    "data_freshness_months": 6,
+    "target_completion_time_seconds": {
+      "quick": 120,
+      "standard": 300,
+      "deep": 900
+    }
+  },
+  "integration_points": {
+    "salesforce": {
+      "object_types": [
+        "Opportunity",
+        "Account",
+        "Contact"
+      ],
+      "required_fields": [
+        "Name",
+        "StageName",
+        "Amount",
+        "CloseDate",
+        "AccountId"
+      ],
+      "optional_fields": [
+        "Competitors__c",
+        "Industry",
+        "Description",
+        "NextStep"
+      ]
+    },
+    "glean_artifacts": {
+      "output_type": "html",
+      "shareable": true,
+      "permissions_aware": true
+    }
+  },
+  "example_usage": [
+    {
+      "command": "/opp-intel-brief 006PZ00000LQamxYAD",
+      "description": "Generate standard depth brief for opportunity"
+    },
+    {
+      "command": "/opp-intel-brief 006PZ00000LQamxYAD --depth deep",
+      "description": "Generate exhaustive research brief"
+    },
+    {
+      "command": "/opp-intel-brief https://glean.lightning.force.com/lightning/r/Opportunity/006PZ00000LQamxYAD/view",
+      "description": "Use Salesforce URL instead of ID"
+    },
+    {
+      "command": "/opp-intel-brief 006ABC123 --focus competitive",
+      "description": "Focus on competitive intelligence only"
+    }
+  ],
+  "support": {
+    "documentation_url": "https://docs.glean.com/skills/opp-intel-brief",
+    "slack_channel": "#sales-enablement",
+    "contact_email": "sales-ops@glean.com",
+    "issue_tracker": "github.com/tgile/opp-intel-brief/issues"
+  },
+  "version_history": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-04",
+      "changes": [
+        "Initial release",
+        "Salesforce opportunity research",
+        "Competitive intelligence integration",
+        "Customer reference matching",
+        "Solution mapping",
+        "Industry intelligence",
+        "Branded HTML artifact output with template system",
+        "Three research depth levels",
+        "Stakeholder mapping with role-based visualization",
+        "MEDDPICCS scorecard integration",
+        "Risk radar with mitigation strategies",
+        "Tabbed navigation interface",
+        "PDF export capability"
+      ]
+    }
+  ],
+  "roadmap": [
+    {
+      "version": "1.1.0",
+      "planned_features": [
+        "LinkedIn contact insights",
+        "Gong sentiment analysis",
+        "Win probability scoring",
+        "Historical pattern matching"
+      ]
+    },
+    {
+      "version": "1.2.0",
+      "planned_features": [
+        "Team collaboration",
+        "Comments and annotations",
+        "Version history",
+        "PDF/PowerPoint export"
+      ]
+    }
+  ]
+}

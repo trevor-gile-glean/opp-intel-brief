@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportunity Intelligence Brief - {{ACCOUNT_NAME}}</title>
+    <style>
+        :root {
+            /* Glean Brand Colors */
+            --glean-blue: #343CED;
+            --glean-green: #D8FD49;
+            --glean-oatmeal: #F6F3EB;
+            --glean-black: #000000;
+            --glean-white: #FFFFFF;
+
+            /* Secondary Palette */
+            --glean-accent-green: #00B207;
+            --glean-accent-orange: #FF7E4C;
+            --glean-accent-magenta: #9300B8;
+            --glean-accent-darkblue: #1017B1;
+            --glean-accent-cement: #777767;
+
+            /* Semantic Colors */
+            --color-success: var(--glean-accent-green);
+            --color-warning: var(--glean-accent-orange);
+            --color-info: var(--glean-blue);
+            --color-text: #1a1a1a;
+            --color-text-secondary: #666666;
+            --color-border: #e5e5e5;
+            --color-background: var(--glean-white);
+            --color-background-alt: var(--glean-oatmeal);
+
+            /* Typography */
+            --font-sans: "PolySans", "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --font-mono: "SF Mono", "Monaco", "Consolas", monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-background);
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-background);
+        }
+
+        /* Header */
+        .header {
+            background: var(--glean-blue);
+            color: var(--glean-white);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .generated-date {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+        }
+
+        /* Executive Summary */
+        .executive-summary {
+            background: var(--color-background-alt);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--glean-green);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .summary-value.large {
+            font-size: 1.75rem;
+        }
+
+        /* Key Insights */
+        .key-insights {
+            background: var(--glean-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+        }
+
+        .key-insights h3 {
+            color: var(--glean-blue);
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .insight-list {
+            list-style: none;
+        }
+
+        .insight-list li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .insight-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--glean-blue);
+            font-weight: bold;
+        }
+
+        /* Sections */
+        .section {
+            background: var(--color-background);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--color-border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--glean-blue);
+            color: var(--glean-white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--glean-blue);
+        }
+
+        /* Content */
+        p {
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-background-alt);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-success {
+            background: var(--glean-green);
+            color: var(--glean-black);
+        }
+
+        .badge-warning {
+            background: var(--glean-accent-orange);
+            color: var(--glean-white);
+        }
+
+        .badge-info {
+            background: var(--glean-blue);
+            color: var(--glean-white);
+        }
+
+        .badge-secondary {
+            background: var(--color-border);
+            color: var(--color-text);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th {
+            background: var(--color-background-alt);
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        tr:hover {
+            background: var(--color-background-alt);
+        }
+
+        /* Competitor Grid */
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .competitor-card {
+            background: var(--glean-white);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .competitor-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 1rem;
+        }
+
+        .competitor-section {
+            margin-bottom: 1rem;
+        }
+
+        .competitor-section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Reference Cards */
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .reference-card {
+            background: var(--glean-white);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
+        .reference-company {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--glean-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .reference-meta {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .reference-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+        }
+
+        /* Action Items */
+        .action-list {
+            list-style: none;
+            counter-reset: action-counter;
+        }
+
+        .action-list li {
+            counter-increment: action-counter;
+            padding-left: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .action-list li:before {
+            content: counter(action-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            background: var(--glean-blue);
+            color: var(--glean-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        /* Callout Box */
+        .callout {
+            background: var(--glean-blue);
+            color: var(--glean-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .callout h4 {
+            color: var(--glean-green);
+            margin-top: 0;
+        }
+
+        .callout p {
+            color: var(--glean-white);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--color-border);
+            margin-top: 3rem;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            color: var(--glean-blue);
+        }
+
+        /* Utility Classes */
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+
+        .text-center { text-align: center; }
+        .text-secondary { color: var(--color-text-secondary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            .header {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .section {
+                padding: 1.5rem 1rem;
+            }
+
+            .summary-grid,
+            .competitor-grid,
+            .reference-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="logo">Glean™</div>
+                <div class="generated-date">{{GENERATED_DATE}}</div>
+            </div>
+            <h1>{{ACCOUNT_NAME}}</h1>
+            <div class="subtitle">Opportunity Intelligence Brief</div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h2 class="mb-2">Executive Summary</h2>
+
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-label">Opportunity</div>
+                    <div class="summary-value">{{OPPORTUNITY_NAME}}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Stage</div>
+                    <div class="summary-value">{{STAGE}}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Amount</div>
+                    <div class="summary-value large">{{AMOUNT}}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Close Date</div>
+                    <div class="summary-value">{{CLOSE_DATE}}</div>
+                </div>
+            </div>
+
+            <div class="key-insights">
+                <h3>Key Insights</h3>
+                <ul class="insight-list">
+                    {{KEY_INSIGHTS}}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Opportunity Context -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h2>Opportunity Context</h2>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Account Overview</div>
+                {{ACCOUNT_OVERVIEW}}
+            </div>
+
+            <h3>Key Contacts</h3>
+            {{CONTACTS_TABLE}}
+
+            <h3>Identified Needs</h3>
+            {{IDENTIFIED_NEEDS}}
+
+            <h3>Known Competitors</h3>
+            {{KNOWN_COMPETITORS}}
+        </div>
+
+        <!-- Competitive Intelligence -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">⚔️</div>
+                <h2>Competitive Intelligence</h2>
+            </div>
+
+            <div class="competitor-grid">
+                {{COMPETITOR_CARDS}}
+            </div>
+
+            <div class="callout">
+                <h4>🎯 Win Strategy</h4>
+                {{WIN_STRATEGY}}
+            </div>
+        </div>
+
+        <!-- Differentiation Messaging -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">💡</div>
+                <h2>Differentiation Messaging</h2>
+            </div>
+
+            <h3>Key Differentiators</h3>
+            {{KEY_DIFFERENTIATORS}}
+
+            <h3>Value Proposition</h3>
+            {{VALUE_PROPOSITION}}
+
+            <h3>Proof Points</h3>
+            {{PROOF_POINTS}}
+
+            <h3>Objection Handling</h3>
+            {{OBJECTION_HANDLING}}
+        </div>
+
+        <!-- Use Case & Solution Mapping -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🔧</div>
+                <h2>Use Case & Solution Mapping</h2>
+            </div>
+
+            {{USE_CASE_MAPPING}}
+        </div>
+
+        <!-- Customer References -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🏆</div>
+                <h2>Customer References & Social Proof</h2>
+            </div>
+
+            <div class="reference-grid">
+                {{REFERENCE_CARDS}}
+            </div>
+        </div>
+
+        <!-- Industry Intelligence -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">📊</div>
+                <h2>Industry Intelligence</h2>
+            </div>
+
+            {{INDUSTRY_INTELLIGENCE}}
+        </div>
+
+        <!-- Next Steps -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🚀</div>
+                <h2>Next Steps & Recommendations</h2>
+            </div>
+
+            <h3>Recommended Actions</h3>
+            <ol class="action-list">
+                {{RECOMMENDED_ACTIONS}}
+            </ol>
+
+            <h3>Suggested Resources</h3>
+            {{SUGGESTED_RESOURCES}}
+
+            <h3>Risk Mitigation</h3>
+            {{RISK_MITIGATION}}
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">Glean™</div>
+            <p>Generated by Opportunity Intelligence Brief Skill | Powered by Glean Assistant</p>
+            <p class="text-secondary">This brief is confidential and intended for internal use only.</p>
+        </div>
+    </div>
+</body>
+</html>

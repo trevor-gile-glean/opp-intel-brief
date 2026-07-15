@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "bash": {
+      "allow": [
+        {
+          "command": "python*",
+          "reason": "Process and format opportunity data"
+        },
+        {
+          "command": "jq*",
+          "reason": "Parse JSON data from Glean searches"
+        }
+      ]
+    },
+    "mcp": {
+      "allow": [
+        {
+          "server": "glean_default",
+          "tool": "search",
+          "reason": "Search for competitive intelligence, references, solutions, and industry content"
+        },
+        {
+          "server": "glean_default",
+          "tool": "read_document",
+          "reason": "Read full documents for detailed analysis"
+        },
+        {
+          "server": "glean_default",
+          "tool": "chat",
+          "reason": "Use AI-powered synthesis for complex research"
+        },
+        {
+          "server": "glean_default",
+          "tool": "employee_search",
+          "reason": "Find account team members and subject matter experts"
+        }
+      ]
+    }
+  },
+  "env": {
+    "SKILL_NAME": "opp-intel-brief",
+    "SKILL_VERSION": "1.0.0",
+    "OUTPUT_FORMAT": "html",
+    "DEFAULT_DEPTH": "standard"
+  }
+}

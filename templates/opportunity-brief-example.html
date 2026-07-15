@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opportunity Intelligence Brief — Sony Interactive Entertainment</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --artifact-background: var(--theme-background, #ffffff);
+  --artifact-background-light: var(--theme-background-light, #f6f6f6);
+  --artifact-background-mid: var(--theme-background-mid, #f0f0f0);
+  --artifact-border-light: var(--theme-border-light, #e5e5e5);
+  --artifact-border-dark: var(--theme-border-dark, #cccccc);
+  --artifact-primary-brand: var(--theme-primary-brand, #343ced);
+  --artifact-primary-highlight: var(--theme-primary-highlight, #1b1b1b);
+  --artifact-primary-hover: var(--theme-primary-hover, #404040);
+  --artifact-selected: var(--theme-selected, #e8e8e8);
+  --artifact-text-primary: var(--theme-text-primary, #1b1b1b);
+  --artifact-text-secondary: var(--theme-text-secondary, #727272);
+  --artifact-text-highlight: var(--theme-text-highlight, #fff8e5);
+
+  /* Semantic status colors */
+  --status-green-bg: #e8f5e9;
+  --status-green-text: #1b5e20;
+  --status-yellow-bg: #fff8e1;
+  --status-yellow-text: #5c3a00;
+  --status-red-bg: #fce4ec;
+  --status-red-text: #880e4f;
+  --status-blue-bg: #e3f2fd;
+  --status-blue-text: #0d47a1;
+  --status-purple-bg: #f3e5f5;
+  --status-purple-text: #4a148c;
+  --status-gray-bg: #f5f5f5;
+  --status-gray-text: #424242;
+
+  /* Chart accent colors */
+  --accent-indigo: #343ced;
+  --accent-amber: #f59e0b;
+  --accent-rose: #e11d48;
+  --accent-emerald: #10b981;
+  --accent-violet: #8b5cf6;
+  --accent-orange: #ef601b;
+}
+html[data-theme='dark'] {
+  --status-green-bg: #1b3a1d;
+  --status-green-text: #a5d6a7;
+  --status-yellow-bg: #3a2e00;
+  --status-yellow-text: #ffe082;
+  --status-red-bg: #3a0a1a;
+  --status-red-text: #f48fb1;
+  --status-blue-bg: #0d2a3a;
+  --status-blue-text: #90caf9;
+  --status-purple-bg: #2a0e3a;
+  --status-purple-text: #ce93d8;
+  --status-gray-bg: #2a2a2a;
+  --status-gray-text: #bdbdbd;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--artifact-background);
+  color: var(--artifact-text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ─── Layout ─── */
+.page { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* ─── Header ─── */
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding-bottom: 20px; border-bottom: 2px solid var(--artifact-border-light);
+  margin-bottom: 28px; flex-wrap: wrap;
+}
+.header-left h1 {
+  font-size: 22px; font-weight: 700; color: var(--artifact-text-primary);
+  display: flex; align-items: center; gap: 10px;
+}
+.header-left .subtitle { color: var(--artifact-text-secondary); font-size: 13px; margin-top: 4px; }
+.glean-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--artifact-primary-brand); color: #fff;
+  border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.date-badge {
+  font-size: 12px; color: var(--artifact-text-secondary);
+  background: var(--artifact-background-mid); border-radius: 6px; padding: 4px 10px;
+}
+
+/* ─── Nav Tabs ─── */
+.tabs { display: flex; gap: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab {
+  padding: 8px 14px; border-radius: 7px; font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1px solid transparent;
+  background: var(--artifact-background-mid);
+  color: var(--artifact-text-secondary);
+  transition: background .15s, color .15s, border-color .15s;
+}
+.tab:hover { background: var(--artifact-selected); color: var(--artifact-text-primary); }
+.tab.active {
+  background: var(--artifact-primary-brand); color: #fff;
+  border-color: var(--artifact-primary-brand);
+}
+
+/* ─── Sections ─── */
+.section { display: none; }
+.section.active { display: block; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Title ─── */
+.section-title {
+  font-size: 16px; font-weight: 700; color: var(--artifact-text-primary);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.section-title .icon { font-size: 18px; }
+
+/* ─── Deal Snapshot ─── */
+.snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.snapshot-card {
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; padding: 14px 16px;
+}
+.snapshot-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--artifact-text-secondary); margin-bottom: 4px; }
+.snapshot-card .value { font-size: 15px; font-weight: 700; color: var(--artifact-text-primary); }
+.snapshot-card .sub { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 2px; }
+
+/* ─── Stage Progress ─── */
+.stage-bar { display: flex; gap: 4px; margin-bottom: 20px; }
+.stage-step {
+  flex: 1; height: 6px; border-radius: 99px;
+  background: var(--artifact-border-light);
+  transition: background .3s;
+}
+.stage-step.done { background: var(--accent-emerald); }
+.stage-step.current { background: var(--accent-amber); }
+.stage-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--artifact-text-secondary); margin-bottom: 4px; }
+
+/* ─── Tags ─── */
+.tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 99px; font-size: 12px; font-weight: 500;
+}
+.tag-green { background: var(--status-green-bg); color: var(--status-green-text); }
+.tag-yellow { background: var(--status-yellow-bg); color: var(--status-yellow-text); }
+.tag-red { background: var(--status-red-bg); color: var(--status-red-text); }
+.tag-blue { background: var(--status-blue-bg); color: var(--status-blue-text); }
+.tag-purple { background: var(--status-purple-bg); color: var(--status-purple-text); }
+.tag-gray { background: var(--status-gray-bg); color: var(--status-gray-text); }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
+}
+.card-title { font-size: 14px; font-weight: 700; color: var(--artifact-text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.card-body { font-size: 13px; color: var(--artifact-text-secondary); line-height: 1.65; }
+.card-body ul { padding-left: 18px; }
+.card-body li { margin-bottom: 5px; }
+.card-body strong { color: var(--artifact-text-primary); }
+
+/* ─── Stakeholder Grid ─── */
+.stakeholder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.stakeholder-card {
+  border: 1px solid var(--artifact-border-light); border-radius: 10px;
+  padding: 14px 16px; background: var(--artifact-background-light);
+  border-left: 4px solid transparent;
+}
+.stakeholder-card.champion { border-left-color: var(--accent-emerald); }
+.stakeholder-card.economic { border-left-color: var(--accent-indigo); }
+.stakeholder-card.technical { border-left-color: var(--accent-amber); }
+.stakeholder-card.risk { border-left-color: var(--accent-rose); }
+.stakeholder-card.neutral { border-left-color: var(--artifact-border-dark); }
+.stakeholder-name { font-size: 14px; font-weight: 700; color: var(--artifact-text-primary); }
+.stakeholder-title { font-size: 12px; color: var(--artifact-text-secondary); margin-bottom: 8px; }
+.stakeholder-notes { font-size: 12px; color: var(--artifact-text-secondary); line-height: 1.5; }
+.stakeholder-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--artifact-text-secondary); }
+.legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+/* ─── Quote Block ─── */
+.quote-block {
+  border-left: 3px solid var(--artifact-primary-brand);
+  background: var(--artifact-background-mid); border-radius: 0 8px 8px 0;
+  padding: 12px 16px; margin: 12px 0;
+  font-size: 13px; font-style: italic; color: var(--artifact-text-primary);
+  line-height: 1.6;
+}
+.quote-attribution { font-style: normal; font-weight: 600; font-size: 12px; color: var(--artifact-text-secondary); margin-top: 6px; }
+
+/* ─── Competitive Matrix ─── */
+.compete-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+.compete-table th {
+  padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px;
+  background: var(--artifact-background-mid); color: var(--artifact-text-primary);
+  border-bottom: 2px solid var(--artifact-border-dark);
+}
+.compete-table td { padding: 10px 12px; border-bottom: 1px solid var(--artifact-border-light); vertical-align: top; }
+.compete-table tr:last-child td { border-bottom: none; }
+.compete-table tr:hover td { background: var(--artifact-background-mid); }
+.win-icon { font-size: 14px; }
+
+/* ─── Bungie ROI ─── */
+.roi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.roi-stat {
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; padding: 14px 16px; text-align: center;
+}
+.roi-stat .number { font-size: 24px; font-weight: 700; color: var(--artifact-primary-brand); }
+.roi-stat .label { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 4px; }
+
+/* ─── Use Case Row ─── */
+.usecase-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--artifact-border-light); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.usecase-cell { padding: 14px 16px; font-size: 13px; }
+.usecase-cell:not(:last-child) { border-right: 1px solid var(--artifact-border-light); }
+.usecase-cell.pain { background: var(--status-red-bg); }
+.usecase-cell.solution { background: var(--status-blue-bg); }
+.usecase-cell.outcome { background: var(--status-green-bg); }
+.usecase-cell .uc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; opacity: .7; }
+.usecase-cell.pain .uc-label { color: var(--status-red-text); }
+.usecase-cell.solution .uc-label { color: var(--status-blue-text); }
+.usecase-cell.outcome .uc-label { color: var(--status-green-text); }
+.usecase-cell.pain { color: var(--status-red-text); }
+.usecase-cell.solution { color: var(--status-blue-text); }
+.usecase-cell.outcome { color: var(--status-green-text); }
+
+/* ─── Reference Card ─── */
+.ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.ref-card {
+  border: 1px solid var(--artifact-border-light); border-radius: 10px;
+  padding: 14px 16px; background: var(--artifact-background-light);
+}
+.ref-name { font-size: 14px; font-weight: 700; color: var(--artifact-text-primary); }
+.ref-meta { font-size: 12px; color: var(--artifact-text-secondary); margin-bottom: 8px; }
+.ref-stat { font-size: 13px; font-weight: 600; color: var(--accent-indigo); }
+.ref-note { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 6px; line-height: 1.5; }
+
+/* ─── Next Steps ─── */
+.step-list { list-style: none; padding: 0; }
+.step-item {
+  display: flex; gap: 14px; padding: 12px 16px;
+  background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light);
+  border-radius: 10px; margin-bottom: 10px; align-items: flex-start;
+}
+.step-num {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--artifact-primary-brand); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.step-content .step-title { font-size: 13px; font-weight: 700; color: var(--artifact-text-primary); }
+.step-content .step-body { font-size: 12px; color: var(--artifact-text-secondary); margin-top: 3px; line-height: 1.5; }
+.step-content .step-owner { font-size: 11px; font-weight: 600; color: var(--artifact-primary-brand); margin-top: 4px; }
+
+/* ─── Risk Radar ─── */
+.risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.risk-item { border-radius: 10px; padding: 14px 16px; border: 1px solid; }
+.risk-item.high { background: var(--status-red-bg); border-color: var(--accent-rose); color: var(--status-red-text); }
+.risk-item.medium { background: var(--status-yellow-bg); border-color: var(--accent-amber); color: var(--status-yellow-text); }
+.risk-item.low { background: var(--status-blue-bg); border-color: var(--accent-indigo); color: var(--status-blue-text); }
+.risk-title { font-weight: 700; font-size: 13px; margin-bottom: 5px; }
+.risk-body { font-size: 12px; line-height: 1.5; }
+.risk-mitigation { font-size: 11px; font-weight: 600; margin-top: 6px; opacity: .8; }
+
+/* ─── MEDDPICCS ─── */
+.medd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.medd-item { background: var(--artifact-background-light); border: 1px solid var(--artifact-border-light); border-radius: 10px; padding: 14px 16px; }
+.medd-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--artifact-text-secondary); margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+.medd-value { font-size: 13px; color: var(--artifact-text-primary); line-height: 1.5; }
+.score-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.score-green { background: var(--accent-emerald); }
+.score-yellow { background: var(--accent-amber); }
+.score-red { background: var(--accent-rose); }
+
+/* ─── Divider ─── */
+.divider { border: none; border-top: 1px solid var(--artifact-border-light); margin: 20px 0; }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .usecase-row { grid-template-columns: 1fr; }
+  .usecase-cell:not(:last-child) { border-right: none; border-bottom: 1px solid var(--artifact-border-light); }
+  .snapshot-grid { grid-template-columns: 1fr 1fr; }
+  .header { flex-direction: column; }
+}
+
+@media print {
+  body { background: white !important; color: #1b1b1b !important; }
+  .tabs { display: none !important; }
+  .section { display: block !important; page-break-inside: avoid; }
+  .section-title { margin-top: 24pt; }
+  .card, .stakeholder-card, .ref-card, .step-item, .risk-item, .medd-item { break-inside: avoid; }
+  a { text-decoration: none !important; color: inherit !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>🎮 Sony Interactive Entertainment</h1>
+      <div class="subtitle">Opportunity Intelligence Brief &nbsp;·&nbsp; Oren Yomorta &nbsp;·&nbsp; <span id="opp-date">June 4, 2026</span></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;">
+      <span class="glean-badge">⚡ Glean Intelligence</span>
+      <span class="date-badge">Stage 3–4 · Best Case</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('exec')">Executive Summary</div>
+    <div class="tab" onclick="switchTab('stakeholders')">Stakeholders</div>
+    <div class="tab" onclick="switchTab('competitive')">Competitive Intel</div>
+    <div class="tab" onclick="switchTab('bungie')">Bungie ROI</div>
+    <div class="tab" onclick="switchTab('usecases')">Use Cases</div>
+    <div class="tab" onclick="switchTab('references')">References</div>
+    <div class="tab" onclick="switchTab('risks')">Risks & MEDDPICCS</div>
+    <div class="tab" onclick="switchTab('nextsteps')">Next Steps</div>
+  </div>
+
+  <!-- ═══ EXEC SUMMARY ═══ -->
+  <div class="section active" id="exec">
+    <div class="section-title"><span class="icon">📋</span> Deal Snapshot</div>
+
+    <!-- Stage Bar -->
+    <div class="stage-labels">
+      <span>1 — Discovery</span><span>2 — Blueprint</span><span>3 — Exec Alignment</span><span>4 — Technical + Security</span><span>5 — Commercial</span><span>Closed</span>
+    </div>
+    <div class="stage-bar">
+      <div class="stage-step done"></div>
+      <div class="stage-step done"></div>
+      <div class="stage-step current"></div>
+      <div class="stage-step current"></div>
+      <div class="stage-step"></div>
+      <div class="stage-step"></div>
+    </div>
+
+    <div class="snapshot-grid">
+      <div class="snapshot-card">
+        <div class="label">Total Ask</div>
+        <div class="value">$2.5M–$3M</div>
+        <div class="sub">Platform deal · 3-yr AWS Marketplace</div>
+      </div>
+      <div class="snapshot-card">
+        <div class="label">Seats</div>
+        <div class="value">7K–15K</div>
+        <div class="sub">Platform: 7K confirmed; up to 15K SIE</div>
+      </div>
+      <div class="snapshot-card">
+        <div class="label">Close Target</div>
+        <div class="value">Nov 30, 2026</div>
+        <div class="sub">Best Case · Upside forecast</div>
+      </div>
+      <div class="snapshot-card">
+        <div class="label">Deployment</div>
+        <div class="value">Self-Hosted AWS</div>
+        <div class="sub">Security: 3rd Party Risk Assessment in progress</div>
+      </div>
+      <div class="snapshot-card">
+        <div class="label">Primary Opp</div>
+        <div class="value">SIE – Platform</div>
+        <div class="sub">Opp-4273 · Stage 4</div>
+      </div>
+      <div class="snapshot-card">
+        <div class="label">Gaming Studios Opp</div>
+        <div class="value">SIE – Studios</div>
+        <div class="sub">Opp-17269 · Stage 3 · $500K</div>
+      </div>
+      <div class="snapshot-card">
+        <div class="label">Sales Cycle Age</div>
+        <div class="value">852 Days</div>
+        <div class="sub">Created Feb 2024 · Platform deal</div>
+      </div>
+      <div class="snapshot-card">
+        <div class="label">Tech Sentiment</div>
+        <div class="value">🟢 Green</div>
+        <div class="sub">Platform: Green · Studios: Yellow</div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:8px;"><span class="icon">🔥</span> The 3 Burning Issues</div>
+
+    <div class="card">
+      <div class="card-title">🔍 1. Search is Broken — Salil Said It Directly</div>
+      <div class="card-body">
+        <div class="quote-block">
+          "Search is a burning need — a significant gap not currently being addressed."
+          <div class="quote-attribution">— Salil Joshi, Director DTIS, May 21 Business Case Session</div>
+        </div>
+        Engineers manually search 4–5 systems (SharePoint, Jira, Confluence, Slack, GitHub) for every project context. Bug investigation takes <strong>6–8 hours</strong> with 60% spent just gathering information. SIE purchased ChatGPT Enterprise but cannot "leverage it correctly within the company" — it has zero knowledge of their internal systems.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🤖 2. MCP Sprawl Is Creating Governance Chaos</div>
+      <div class="card-body">
+        <div class="quote-block">
+          "The current rollout of MCP servers at SIE is not moving fast enough, facing governance issues and a struggle to meet internal demand."
+          <div class="quote-attribution">— Darrell Rangel, May 28 Gong Call</div>
+        </div>
+        50+ internal builders are constructing disconnected MCP integrations. No unified control plane, no observability, no consistent governance. Dave Gardner explicitly wants to "orchestrate and automate absolutely everything" — but the DIY route is failing. <strong>Glean's MCP server consolidates all enterprise context into one governed, indexed layer</strong> — exactly what they need but cannot build themselves.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💸 3. Out-of-Cycle Budget — The Window is Now</div>
+      <div class="card-body">
+        <div class="quote-block">
+          "FY26 started April 1st. Glean is not an existing service. We need unbudgeted funding — a creative approach."
+          <div class="quote-attribution">— Daniel Godbout, May 1 Business Case Call</div>
+        </div>
+        FY26 budget cycle opened April 1. Glean is unbudgeted. The window to get into a reforecast is Q3 FY26. <strong>Bungie write-down is publicly visible to Sony's board</strong> — AI spend ROI is under scrutiny across the portfolio. PS6 R&D is ramping — every quarter of delay in productivity improvement widens the margin gap before launch.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-title"><span class="icon">💡</span> Why This Deal Matters Now</div>
+    <div class="card">
+      <div class="card-body">
+        <ul>
+          <li><strong>Bungie ROI is the only enterprise AI proof inside Sony's own ecosystem at scale.</strong> 1,400 users, 60% DAU, 1–2 hrs/week saved. No competitor can match this for this account — the business case is pre-built.</li>
+          <li><strong>Darrell Rangel</strong> — ex-Bungie lead for Glean rollout — is now inside SIE as TPM under Daniel. He is building the business case internally. This is the inside champion activation we needed.</li>
+          <li><strong>Moveworks/ServiceNow acquisition is in integration mode</strong>, 12+ months to merge onto Now Platform. SIE should not bet on Moveworks innovation during this window.</li>
+          <li><strong>SIE has a pre-negotiated $20/user/month rate</strong> (normal is $35–50) valid for expansion — a real financial catalyst on the table.</li>
+          <li><strong>PS6 development is accelerating</strong> — engineering productivity is now a revenue-line concern, not just IT cost.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STAKEHOLDERS ═══ -->
+  <div class="section" id="stakeholders">
+    <div class="section-title"><span class="icon">👥</span> Stakeholder Map</div>
+
+    <div class="stakeholder-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-indigo)"></div> Economic Buyer</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-emerald)"></div> Champion/Advocate</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-amber)"></div> Technical Evaluator</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-rose)"></div> Risk / Blocker</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--artifact-border-dark)"></div> Neutral/Unknown</div>
+    </div>
+
+    <div class="stakeholder-grid">
+
+      <div class="stakeholder-card risk">
+        <div class="stakeholder-name">Dave Gardner</div>
+        <div class="stakeholder-title">VP Architecture &amp; Engineering · Economic Buyer (Primary)</div>
+        <div class="stakeholder-notes">
+          <span class="tag tag-red" style="margin-bottom:6px;display:inline-flex;">⚠ Hard to Reach</span><br>
+          <strong>Key signal:</strong> Wants "full orchestration and automation" for all depts (ITSM, HR, engineering). Frustrated with vendors saying "pay $1M and flip a switch." Canceled/rescheduled meetings 5+ times. Hasn't responded to texts or emails in months. His <em>stated</em> concern is AI that doesn't deliver integration. His <em>actual</em> concern may be budget justification under board AI ROI scrutiny.
+          <br><br><strong>Approach:</strong> Lead with Bungie ROI data + Moveworks-is-distracted narrative. He pointed team to Salil/Daniel → use them to re-engage him with a polished business case.
+        </div>
+      </div>
+
+      <div class="stakeholder-card technical">
+        <div class="stakeholder-name">Salil Joshi</div>
+        <div class="stakeholder-title">Director, DTIS · AI Acceleration Program Lead</div>
+        <div class="stakeholder-notes">
+          <span class="tag tag-yellow" style="margin-bottom:6px;display:inline-flex;">⚡ Sporadic — Engaged When Present</span><br>
+          Leads AI acceleration program at SIE — search, agents, MCP gateway, LLM gateway, control plane. Said search is a "burning need." Confirmed self-hosting is a primary requirement (classified data security). Rarely attends meetings or responds but "connected behind the scenes." Darrell reports he's the real engine on the SIE side. Need to get him to commit to the business case review with Dave.
+        </div>
+      </div>
+
+      <div class="stakeholder-card champion">
+        <div class="stakeholder-name">Darrell Rangel</div>
+        <div class="stakeholder-title">TPM (moved from Bungie April 1, 2026) · Daniel's Team</div>
+        <div class="stakeholder-notes">
+          <span class="tag tag-green" style="margin-bottom:6px;display:inline-flex;">💚 Pro-Glean — Building BC Internally</span><br>
+          Was Bungie TPM lead for Glean rollout. Knows the data, knows the tool. Now inside SIE and actively championing. Limited influence (still new). <strong>Key tasks:</strong> validate Bungie ROI with Darla, brief Michael Williams, quarterback BC effort with Salil/Jason Ahrens for ChatGPT+Slack AI spend data. Scheduled BC review with Daniel for early June.
+        </div>
+      </div>
+
+      <div class="stakeholder-card technical">
+        <div class="stakeholder-name">Daniel Godbout</div>
+        <div class="stakeholder-title">Director (Darrell's Boss) · Business Case Sponsor</div>
+        <div class="stakeholder-notes">
+          <span class="tag tag-blue" style="margin-bottom:6px;display:inline-flex;">🔵 Engaging More Consistently</span><br>
+          Shows up to business case meetings. Requested anonymized peer case studies (not Forrester) on May 1. Needs to send Vinny the business case format and an example of a previous SIE BC. Varun bringing Varun Tilva to the first BC review. This is our near-term gatekeeper to Dave.
+        </div>
+      </div>
+
+      <div class="stakeholder-card neutral">
+        <div class="stakeholder-name">Paul Walsh</div>
+        <div class="stakeholder-title">Head of Digital, Technology, Engineering, IT, Ops (All-up)</div>
+        <div class="stakeholder-notes">
+          Ultimate approver. Dave, JP Mananzon's team (GSO-IM), and engineering all roll up here. Not directly engaged. Will need to be reached through Dave + Ajoi path once business case is approved at the director layer.
+        </div>
+      </div>
+
+      <div class="stakeholder-card technical">
+        <div class="stakeholder-name">Ajoi</div>
+        <div class="stakeholder-title">Daniel's Counterpart · Higher-Level Stakeholder</div>
+        <div class="stakeholder-notes">
+          Identified by Darrell as a needed approver alongside Dave Gardner. Not yet engaged. Reports into Paul Walsh's org. Darrell plans to route through Salil to connect.
+        </div>
+      </div>
+
+      <div class="stakeholder-card champion">
+        <div class="stakeholder-name">Michael Williams</div>
+        <div class="stakeholder-title">Filling Aldridge's Role at Bungie (Temporarily)</div>
+        <div class="stakeholder-notes">
+          <span class="tag tag-green" style="margin-bottom:6px;display:inline-flex;">💚 Key Bungie Bridge</span><br>
+          Darrell plans to meet with Michael to get Bungie's positive data and insights validated for the SIE BC. Critical link to unlock internal proof from the $1.8M Bungie deployment. Darla (at Bungie) will sanity-check the financial numbers.
+        </div>
+      </div>
+
+      <div class="stakeholder-card technical">
+        <div class="stakeholder-name">Justin Beltran</div>
+        <div class="stakeholder-title">VP Engineering · Studios (AI Responsibility)</div>
+        <div class="stakeholder-notes">
+          Previously engaged via Hunter. Eager for engineering and studios use cases. Confirmed "AI for all knowledge workers, not just engineering." Has AI responsibility but may be "on the building side" while Dave is on the buying side. Studios path to Glean is live separately but needs SIE corporate buy-in.
+        </div>
+      </div>
+
+      <div class="stakeholder-card neutral">
+        <div class="stakeholder-name">Jason Ahrens</div>
+        <div class="stakeholder-title">IT / Tool Owner</div>
+        <div class="stakeholder-notes">
+          Darrell is tasking Jason to investigate ChatGPT + Slack AI incumbent tool costs — critical for the tool consolidation pillar of the business case ($2.8M+ savings opportunity). Not yet engaged by Glean directly.
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">🧭</span> Internal Decision Process</div>
+    <div class="card">
+      <div class="card-body">
+        <strong>Committee of 3 Executive Sponsors:</strong>
+        <ul style="margin-top:8px;">
+          <li><strong>Ueli Gallizzi</strong> — SVP Future Tech Group</li>
+          <li><strong>Venkatesh Anandaram</strong> — VP Data and AI</li>
+          <li><strong>Dave Gardner</strong> — VP Engineering &amp; Architecture</li>
+        </ul>
+        <br>
+        <strong>Decision Criteria:</strong> Deliver on capabilities/use case matrix they've been trying to build themselves (GitHub, Confluence, SharePoint, Slack, Okta connectors). Finalize use cases and metrics with SIE team via POC with AI council led by exec sponsors.
+        <br><br>
+        <strong>Paper Process:</strong> AWS Marketplace · <strong>Budget:</strong> Out-of-cycle / reforecast request
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ COMPETITIVE ═══ -->
+  <div class="section" id="competitive">
+    <div class="section-title"><span class="icon">⚔️</span> Competitive Landscape</div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+      <span class="tag tag-red">Primary: Moveworks (ServiceNow)</span>
+      <span class="tag tag-yellow">ChatGPT Enterprise (incumbent)</span>
+      <span class="tag tag-gray">DIY/Build (active)</span>
+      <span class="tag tag-purple">ROVO (Atlassian)</span>
+      <span class="tag tag-gray">SnapLogic (mentioned)</span>
+    </div>
+
+    <table class="compete-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Moveworks / ServiceNow</th>
+          <th>ChatGPT Enterprise</th>
+          <th>DIY / Build</th>
+          <th>Glean ✅</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Connectors</strong></td>
+          <td>10 GA search connectors; most others for agents only; hybrid search (not indexed)</td>
+          <td>~14 file-search only; no Salesforce, Jira, Confluence, ServiceNow native connectors</td>
+          <td>Bespoke; each connector built manually; 1–2 yr timeline</td>
+          <td>100+ deeply indexed; Confluence, Jira, GitHub, SharePoint, Slack out-of-box — SIE's core stack</td>
+        </tr>
+        <tr>
+          <td><strong>Knowledge Graph</strong></td>
+          <td>None — hybrid search with basic rule-based ranking</td>
+          <td>None — world knowledge only, no org graph</td>
+          <td>None — requires bespoke ML engineering to build</td>
+          <td>60+ enterprise signals across people, content, activity — learns SIE-specific language, acronyms, relationships</td>
+        </tr>
+        <tr>
+          <td><strong>Deployment</strong></td>
+          <td>SaaS only (multi-tenant); no VPC option</td>
+          <td>SaaS only; multi-tenant OpenAI infra; no VPC</td>
+          <td>Can self-host but massive infrastructure burden</td>
+          <td>Self-hosted in SIE's AWS account ✅ — classified data stays inside SIE's perimeter</td>
+        </tr>
+        <tr>
+          <td><strong>Agent Platform</strong></td>
+          <td>Developer-focused Agent Studio; script/config work; bundled "free" with ServiceNow now</td>
+          <td>Multi-tenant SaaS only; beta agents; documented safety risks</td>
+          <td>Hand-rolled agents; no governance; no reuse</td>
+          <td>No-code agent builder; MCP server; governed, reusable agents across all depts; Protect built in</td>
+        </tr>
+        <tr>
+          <td><strong>Model Choice</strong></td>
+          <td>Homegrown LLM; no model choice</td>
+          <td>OpenAI models only; locked in</td>
+          <td>Developer chooses; no governance across 50+ builders</td>
+          <td>35+ models (GPT-5.x, Claude Sonnet 4.6, Gemini, Llama); mix per agent/step; model-agnostic future</td>
+        </tr>
+        <tr>
+          <td><strong>Implementation</strong></td>
+          <td>10–14 week implementation; 30–40 hr setup; now merging with ServiceNow platform (12+ mo)</td>
+          <td>Dev platform retrofitted for enterprise; expensive FDE support; hard to scale</td>
+          <td>18+ months for NVIDIA-equivalent (15 engineers); permissions complexity kills projects</td>
+          <td>&lt;2 hrs for native cloud connectors; deployed in weeks; no outsourced support needed</td>
+        </tr>
+        <tr>
+          <td><strong>SIE-Specific Risk</strong></td>
+          <td>ServiceNow acquisition forces product integration roadmap — innovation halted for 12+ months</td>
+          <td>Already purchased; confirmed can't "leverage it correctly"; zero internal knowledge</td>
+          <td>SIE has been trying for years — failed. Years of pain without result.</td>
+          <td><strong>No competitor can match Bungie ROI proof inside Sony's own ecosystem</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">🪤</span> Trap-Setting Questions</div>
+
+    <div class="card">
+      <div class="card-title">Against Moveworks/ServiceNow</div>
+      <div class="card-body">
+        <ul>
+          <li>"ServiceNow just acquired Moveworks — they've been explicit that integration will take 12+ months. What happens to your AI roadmap if Moveworks innovation pauses during that window?"</li>
+          <li>"Moveworks has 10 GA search connectors. Which of your systems — GitHub, Perforce, Confluence, Jira — are covered today vs. on their roadmap?"</li>
+          <li>"ServiceNow is now charging for Action Fabric, their new control layer for third-party agents. How does that affect your TCO if you route 50+ builders through ServiceNow?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Against ChatGPT Enterprise (Incumbent)</div>
+      <div class="card-body">
+        <ul>
+          <li>"You've already invested in ChatGPT Enterprise. What's prevented your team from getting the search and context quality you need from it? [Listen for connector/org-knowledge gaps]"</li>
+          <li>"ChatGPT Enterprise supports ~14 file-search connectors. Which of your critical systems — your Jira Data Center, GitHub Perforce, internal wikis — are actually indexed vs. federated-only?"</li>
+          <li>"Glean's MCP server can actually make ChatGPT smarter — you keep ChatGPT Enterprise AND get Glean's indexed enterprise context in both. That's not either/or."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Against DIY / Internal Build</div>
+      <div class="card-body">
+        <ul>
+          <li>"NVIDIA tried to build this internally with 15 engineers for 18 months and couldn't get permissions and data complexity right. They went to Glean and were in production in 4 months. What do you estimate is the cost of each quarter you're not at full productivity for your engineers?"</li>
+          <li>"For every month engineers are building infrastructure, that's time they're NOT building PS6 features. With PS6 R&D ramping, what's the cost of that delay?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">📊</span> Head-to-Head Win Data</div>
+    <div class="roi-grid">
+      <div class="roi-stat"><div class="number">1.9×</div><div class="label">Glean preferred over ChatGPT for correctness (280 enterprise queries, blind eval)</div></div>
+      <div class="roi-stat"><div class="number">1.6×</div><div class="label">Glean preferred over Claude for correctness &amp; completeness</div></div>
+      <div class="roi-stat"><div class="number">2.5×</div><div class="label">Glean more correct than Claude Cowork on info-seeking; 1.78× faster</div></div>
+      <div class="roi-stat"><div class="number">0/10</div><div class="label">Claude Cowork scores on personalization queries — no org knowledge of user</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ BUNGIE ROI ═══ -->
+  <div class="section" id="bungie">
+    <div class="section-title"><span class="icon">🏆</span> Bungie ROI — The Crown Jewel</div>
+
+    <div class="card" style="border-color:var(--accent-emerald);border-width:2px;">
+      <div class="card-title" style="color:var(--status-green-text);">Why This Data Is Unbeatable for SIE</div>
+      <div class="card-body">
+        Bungie ROI data ($1.8M estimated efficiency savings, 1–4 hrs/week saved, engineering Q&amp;A → near zero, 76% WAU/MAU, 60–61% DAU) is <strong>the only enterprise AI proof point inside Sony's own ecosystem at scale.</strong> No competitor can match this for this account. The business case is pre-built. Darrell is validating the numbers with Darla at Bungie before presenting to Daniel and Dave.
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:4px;"><span class="icon">📈</span> Bungie Usage Metrics (May 2026 Analysis)</div>
+    <div class="roi-grid">
+      <div class="roi-stat"><div class="number">~1,000</div><div class="label">Licensed Seats at Bungie</div></div>
+      <div class="roi-stat"><div class="number">60–61%</div><div class="label">Daily Active User Rate (peak 690 DAU)</div></div>
+      <div class="roi-stat"><div class="number">+138%</div><div class="label">Growth in Total Weekly Actions (Oct '25 → Apr '26)</div></div>
+      <div class="roi-stat"><div class="number">+362%</div><div class="label">Growth in AI Assistant Actions in same period</div></div>
+      <div class="roi-stat"><div class="number">87%</div><div class="label">Assistant % of all actions (was 45% in Oct '25)</div></div>
+      <div class="roi-stat"><div class="number">88–93%</div><div class="label">Daily Chat Usage Rate among active users</div></div>
+      <div class="roi-stat"><div class="number">1–2 hrs</div><div class="label">Time saved per user per week (survey of 130 users)</div></div>
+      <div class="roi-stat"><div class="number">5.6×</div><div class="label">Current ROI on Bungie's Glean contract</div></div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">💵</span> SIE Productivity Value — Bungie-Grounded Model</div>
+
+    <div class="card">
+      <div class="card-title">Three-Pillar Business Case</div>
+      <div class="card-body">
+        <ul>
+          <li>
+            <strong>Pillar 1 — Search Productivity:</strong> 8.1 min/search saved (10.3 min before → 2.2 min after) × 15K users × 60% adoption × 50% productivity recapture × 50% software attribution × 10% risk adjustment = <strong>$17.1M upside</strong> (Bungie-grounded, conservative)
+          </li>
+          <li>
+            <strong>Pillar 2 — Tool Consolidation:</strong> 5 tools retired · Jason Ahrens to provide ChatGPT + Slack AI spend data. Preliminary estimate: <strong>$2.8M savings</strong>
+          </li>
+          <li>
+            <strong>Pillar 3 — Workflow Optimization:</strong> Dave's explicit 50-person ITSM headcount target → 20 FTE repurposed = <strong>$1.9M</strong> (GSO-IM incident management team alone previously validated this ROI)
+          </li>
+        </ul>
+        <br>
+        <strong>Hard dollar total: $6.2M · Coverage of $5M ask: 124%</strong><br>
+        <em>Payback: Estimated under 1 year at $25/user/month</em>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ROI Methodology (Varun Tilva / Business Value Consulting)</div>
+      <div class="card-body">
+        <ul>
+          <li>Blended hourly rate: <strong>$75/hr</strong> (engineering-weighted)</li>
+          <li>Productivity recapture: <strong>50%</strong> (conservative)</li>
+          <li>Software attribution: <strong>50%</strong> (not 100% to Glean)</li>
+          <li>Risk adjustment: <strong>10%</strong> haircut applied to final output</li>
+          <li>Industry benchmark for search time saved: <strong>8.1 min/query</strong> (900 customer deployments, 23M sessions)</li>
+          <li>SIE seat scope: <strong>15,000</strong> (Salil's recommendation; 8,000 in engineering org)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      "Bungie shifted from 55% Search / 45% AI to 13% Search / 87% AI in 6 months. This is an AI Assistant platform."
+      <div class="quote-attribution">— Bungie Usage Analysis, May 2026, Glean BVC</div>
+    </div>
+  </div>
+
+  <!-- ═══ USE CASES ═══ -->
+  <div class="section" id="usecases">
+    <div class="section-title"><span class="icon">🗺️</span> Use Case &amp; Solution Mapping</div>
+
+    <p style="color:var(--artifact-text-secondary);font-size:13px;margin-bottom:16px;">Primary persona: <strong>Engineering (50% of population)</strong> · Secondary: ITSM/IT Ops, HR, Legal</p>
+
+    <div class="usecase-row">
+      <div class="usecase-cell pain"><div class="uc-label">Pain</div>Bug investigation takes 6–8 hours; 60% time on info gathering across GitHub, Jira, Confluence, Slack</div>
+      <div class="usecase-cell solution"><div class="uc-label">Glean Solution</div>Engineering Search + Agent: unified search across all systems; on-call debugging agent surfaces runbooks, related tickets, relevant experts automatically</div>
+      <div class="usecase-cell outcome"><div class="uc-label">Outcome</div>Bungie: near-zero engineering Q&amp;A interruptions; 30 min saved per bug fix. NVIDIA equivalent: 10 SWE FTEs repurposed</div>
+    </div>
+
+    <div class="usecase-row">
+      <div class="usecase-cell pain"><div class="uc-label">Pain</div>Project story creation requires 4–5 system manual lookups (SharePoint, Jira, Confluence, Slack) — takes days instead of minutes</div>
+      <div class="usecase-cell solution"><div class="uc-label">Glean Solution</div>Agentic workflow: Start in Slack, Glean understands project context across all systems, creates Jira story, generates code scaffold with Code Writer, opens PR in GitHub</div>
+      <div class="usecase-cell outcome"><div class="uc-label">Outcome</div>Feature velocity +5% (Home Depot engineering benchmark); sprint cycles reduced from 4 → 3.8</div>
+    </div>
+
+    <div class="usecase-row">
+      <div class="usecase-cell pain"><div class="uc-label">Pain</div>MCP servers rolling out too slowly (50+ builders, governance chaos, no unified control plane)</div>
+      <div class="usecase-cell solution"><div class="uc-label">Glean Solution</div>Glean as AI control plane: MCP server consolidates all enterprise context into one indexed, governed layer; agent builder with governance, audit logs, least-privilege policies; Protect built in</div>
+      <div class="usecase-cell outcome"><div class="uc-label">Outcome</div>Single control plane replacing 50+ ad-hoc MCP integrations; Salil confirmed this is the "strong proposition" needed</div>
+    </div>
+
+    <div class="usecase-row">
+      <div class="usecase-cell pain"><div class="uc-label">Pain</div>ChatGPT Enterprise purchased but cannot leverage internal knowledge; no connector depth for Jira, Confluence, GitHub</div>
+      <div class="usecase-cell solution"><div class="uc-label">Glean Solution</div>Glean MCP server surfaces enterprise context inside ChatGPT; OR full Glean deployment replaces ChatGPT as the intelligence layer (keep ChatGPT as a reasoning engine, Glean for context)</div>
+      <div class="usecase-cell outcome"><div class="uc-label">Outcome</div>Consolidate tools; ChatGPT spend reduction; Glean preferred 1.9× over ChatGPT on enterprise queries</div>
+    </div>
+
+    <div class="usecase-row">
+      <div class="usecase-cell pain"><div class="uc-label">Pain</div>ITSM incident management: GSO-IM team (JP Mananzon) struggles with context lookup during outages; Dave's 50-person headcount target for automation</div>
+      <div class="usecase-cell solution"><div class="uc-label">Glean Solution</div>IT Service Management agent: Glean Agent automatically surfaces runbooks, incident history, similar tickets when new incident created. Integrates with ServiceNow &amp; Jira Service Management</div>
+      <div class="usecase-cell outcome"><div class="uc-label">Outcome</div>GSO-IM use case alone previously validated to justify full SIE contract. Dave's 50-person headcount = 20 FTE repurposed = $1.9M value pillar</div>
+    </div>
+
+    <div class="usecase-row">
+      <div class="usecase-cell pain"><div class="uc-label">Pain</div>HR workflows (job requisitions, career reviews, benefits) require manual lookup across Workday, Greenhouse, disparate docs</div>
+      <div class="usecase-cell solution"><div class="uc-label">Glean Solution</div>HR Agent: Automate job req workflows, 360-degree career reviews; Glean already demonstrated this use case to Darrell (email shared by Vinny)</div>
+      <div class="usecase-cell outcome"><div class="uc-label">Outcome</div>T-Mobile benchmark: HR Bot driving 40%+ ticket deflection; Darrell specifically requested a live demo of HR workflow with Workday</div>
+    </div>
+
+    <div class="usecase-row">
+      <div class="usecase-cell pain"><div class="uc-label">Pain</div>New engineers spend weeks ramping; institutional knowledge locked in individuals (crunch culture makes onboarding worse)</div>
+      <div class="usecase-cell solution"><div class="uc-label">Glean Solution</div>Personalized onboarding assistant; searches across GitHub, Confluence, Jira, Slack for new hire context; surfaces relevant experts and recent project history</div>
+      <div class="usecase-cell outcome"><div class="uc-label">Outcome</div>Glean benchmark: 36 hrs reduced onboarding time; Pure Storage +39-point onboarding satisfaction score; Forrester: 93% reduction in onboarding queries within 2 years</div>
+    </div>
+  </div>
+
+  <!-- ═══ REFERENCES ═══ -->
+  <div class="section" id="references">
+    <div class="section-title"><span class="icon">🌟</span> Customer References &amp; Social Proof</div>
+
+    <p style="color:var(--artifact-text-secondary);font-size:13px;margin-bottom:16px;">Sorted by relevance: Gaming/Media first, then Engineering-heavy tech companies</p>
+
+    <div class="ref-grid">
+
+      <div class="ref-card" style="border-left:4px solid var(--accent-emerald);">
+        <div class="ref-name">🎮 Bungie (Internal Sony)</div>
+        <div class="ref-meta">Gaming Studio · 1,400 users · Already at Glean</div>
+        <div class="ref-stat">60–61% DAU · 5.6× ROI · $1.8M savings</div>
+        <div class="ref-note"><strong>The ultimate reference for SIE.</strong> Same parent company, similar engineering stack (Confluence, Jira, GitHub), same security requirements. Darrell came from here. Darla can validate financials. Michael Williams can brief SIE leadership. Daniel requested anonymized peer data specifically in lieu of Forrester — Bungie is the answer.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">🎮 Riot Games</div>
+        <div class="ref-meta">Gaming · 7,582 employees · Launched April 2026</div>
+        <div class="ref-stat">$1.45M ARR · 31% activation</div>
+        <div class="ref-note">Gaming-native, engineering-heavy. Just launched — recent, same industry vertical. Strong signal that gaming studios are actively adopting Glean now.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">🎮 Supercell</div>
+        <div class="ref-meta">Gaming · 2,155 employees · Launched March 2024</div>
+        <div class="ref-stat">750 seats · 62% stickiness</div>
+        <div class="ref-note">Mobile gaming studio with strong engineering culture. Similar tech stack. Good analog for smaller studio deployments within SIE.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">🎮 Kahoot!</div>
+        <div class="ref-meta">Gaming · 600 employees · Launched March 2024</div>
+        <div class="ref-stat">260 seats · 87% seat utilization</div>
+        <div class="ref-note">Video/mobile game developer. High utilization rate. Good reference for gaming vertical.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">💡 NVIDIA</div>
+        <div class="ref-meta">Semiconductor / Engineering · 20K–30K users</div>
+        <div class="ref-stat">10 SWE FTEs repurposed · Enterprise standard</div>
+        <div class="ref-note">Most relevant DIY-displacement story. 15 engineers, 18 months of internal build failed. NVIDIA made Glean "enterprise standard." Jensen Huang shouted out Glean at CES Jan 2025. Engineering culture nearly identical to SIE platform teams.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">💼 LinkedIn</div>
+        <div class="ref-meta">Tech / 5+ hrs/week searching · Chose Glean over Copilot</div>
+        <div class="ref-stat">$1.5M+ productivity · $240K cost savings · 20K MAU in 2 months</div>
+        <div class="ref-note">Beat Microsoft Copilot in competitive eval. One Threat-bot agent = $2.4M annual engineering savings. Strong engineering + security use case. Dave Gardner's "security automation" concern matches LinkedIn's threat modeling story exactly.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">🏠 Home Depot</div>
+        <div class="ref-meta">Retail / 140K+ employees · Engineering focus</div>
+        <div class="ref-stat">$8M annual engineering savings · +5% feature release velocity</div>
+        <div class="ref-note">Engineers spending 2+ hrs/week searching for information. Massive scale deployment. Note: Paul Walker advised verifying reference status before using — confirm before presenting to Dave.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">📊 Booking.com</div>
+        <div class="ref-meta">Tech / 14,000 employees · Full scale</div>
+        <div class="ref-stat">"So much positivity at launch" — Sr Engineering Manager</div>
+        <div class="ref-note">Large-scale rollout across 14K employees. Relevant for SIE's full-company deployment ambition. "Glean helps you get work done, rather than just find information."</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">🏡 Zillow</div>
+        <div class="ref-meta">Tech / Enterprise · Engineering + Agents</div>
+        <div class="ref-stat">80% adoption · 4,600+ agents built</div>
+        <div class="ref-note">Distributed engineering workforce. 4,600+ employee-built agents. Strong for Dave's "orchestrate everything" vision — proof that agentic AI is possible at scale with governance.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="ref-name">📱 Duolingo</div>
+        <div class="ref-meta">Tech · 500+ hrs/month saved · 5× ROI</div>
+        <div class="ref-stat">$1.1M+ yearly savings · 5× ROI from knowledge access</div>
+        <div class="ref-note">Engineering + product team. Replaced homegrown internal search ("Metasearch") with Glean — strong DIY-displacement story relevant to SIE's failed internal build history.</div>
+      </div>
+
+    </div>
+
+    <hr class="divider">
+    <div class="card" style="background:var(--status-blue-bg);border-color:var(--accent-indigo);">
+      <div class="card-title" style="color:var(--status-blue-text);">📌 Action: Daniel Requested Peer Case Studies</div>
+      <div class="card-body" style="color:var(--status-blue-text);">
+        Daniel explicitly requested anonymized peer case studies from <strong>similar organizations</strong> (not Forrester) during the May 1 business case call. The workbook lists this as P0 (Priority 0). Gaming/media/consumer-tech orgs with validated search-time savings are the priority. Use Riot Games + Bungie + NVIDIA as the primary trio.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RISKS & MEDDPICCS ═══ -->
+  <div class="section" id="risks">
+    <div class="section-title"><span class="icon">⚠️</span> Deal Risks</div>
+
+    <div class="risk-grid">
+      <div class="risk-item high">
+        <div class="risk-title">🔴 Dave Gardner Disengaged</div>
+        <div class="risk-body">5+ meetings canceled/rescheduled. Hasn't responded to texts. Not in current BC conversations. He's the economic buyer and AI committee exec.</div>
+        <div class="risk-mitigation">Mitigation: Route v1 BC through Daniel → Darrell → Salil. Get Daniel to set the meeting. Bring Varun from BVC to add credibility.</div>
+      </div>
+      <div class="risk-item high">
+        <div class="risk-title">🔴 Out-of-Cycle Budget</div>
+        <div class="risk-body">Glean is unbudgeted for FY26. Requires creative reforecast approach. Q3 is likely the last window before FY27 budget cycle begins.</div>
+        <div class="risk-mitigation">Mitigation: Hard dollar case ($6.2M vs $5M ask). AWS Marketplace credits angle — Tracey Dwyer (AWS) has strategic investment credits to apply by July. Frame as productivity investment not new expense.</div>
+      </div>
+      <div class="risk-item high">
+        <div class="risk-title">🔴 Moveworks Bundled Free by ServiceNow</div>
+        <div class="risk-body">ServiceNow is aggressively promoting Moveworks by bundling it for free to drive adoption. Early customer interest rising. This is the competitive trap Glean must avoid.</div>
+        <div class="risk-mitigation">Mitigation: "Free" Moveworks = 12+ months of integration distraction + ITSM-only scope + no horizontal platform. Pull narrative up to Work AI vs. ticket deflection. SIE needs search + agents for ALL teams, not just IT.</div>
+      </div>
+      <div class="risk-item medium">
+        <div class="risk-title">🟡 No Confirmed Champion</div>
+        <div class="risk-body">Darrell is pro-Glean but new/limited influence. Salil is hit-or-miss. Daniel is engaging but no authority. No one with real power has committed.</div>
+        <div class="risk-mitigation">Mitigation: Make Darrell successful with the BC. Help him arm Salil. Use Bungie's Michael Williams to get peer-to-peer validation at the VP level.</div>
+      </div>
+      <div class="risk-item medium">
+        <div class="risk-title">🟡 Leadership Wants "Full Orchestration" Not Just Search</div>
+        <div class="risk-body">Dave's April 1 demo feedback: "missed the mark on the art of the possible." Wants to orchestrate everything for ITSM, HR, more. Risk of gap between near-term search story and leadership vision.</div>
+        <div class="risk-mitigation">Mitigation: Lead with search as the "opening" (Salil's framing) — then show Zillow (4,600+ agents), NVIDIA scale, and the MCP control plane vision. Search IS the foundation for orchestration.</div>
+      </div>
+      <div class="risk-item medium">
+        <div class="risk-title">🟡 MCP Sprawl as Internal "Good Enough"</div>
+        <div class="risk-body">50+ internal builders are already building MCP integrations. Risk they convince themselves they can DIY the control plane.</div>
+        <div class="risk-mitigation">Mitigation: Use NVIDIA DIY failure story. Highlight permissions complexity, governance gaps, token cost (Glean's MCP is 30% cheaper per token than off-the-shelf tools). "MCP is a protocol, not a context layer."</div>
+      </div>
+      <div class="risk-item low">
+        <div class="risk-title">🔵 Bungie Data Validation Needed</div>
+        <div class="risk-body">Darrell needs Darla at Bungie to validate the financial ROI numbers. If Darla is unavailable or numbers change, the BC is weakened.</div>
+        <div class="risk-mitigation">Mitigation: BVC has already calculated conservative model from Glean telemetry. Even without Darla validation, the data is defensible. Survey baseline: 130 Bungie users confirm 1–2 hrs/week saved.</div>
+      </div>
+      <div class="risk-item low">
+        <div class="risk-title">🔵 Security Review in Progress</div>
+        <div class="risk-body">3rd party risk assessment ongoing. Infosec has previously reviewed Glean but will need to "rubber stamp" for this deal.</div>
+        <div class="risk-mitigation">Mitigation: Self-hosted AWS deployment addresses classified data concern (Salil's #1 requirement). Leverage prior Bungie infosec approval. Security team has already approved Glean once for this Sony family.</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">📐</span> MEDDPICCS Scorecard</div>
+
+    <div class="medd-grid">
+      <div class="medd-item">
+        <div class="medd-label">M — Metrics <div class="score-dot score-yellow"></div></div>
+        <div class="medd-value">BVC model in progress. 3-pillar BC: $6.2M vs $5M ask. Bungie data validated. Daniel requested anonymized peer studies. Final numbers pending Darla sanity check.</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">E — Economic Buyer <div class="score-dot score-red"></div></div>
+        <div class="medd-value">Dave Gardner (VP Eng &amp; Architecture) + committee (Ueli Gallizzi SVP, Venkatesh Anandaram VP Data/AI). Dave is disengaged — most critical gap in deal right now.</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">D — Decision Criteria <div class="score-dot score-yellow"></div></div>
+        <div class="medd-value">Deliver on capabilities/use case matrix (GitHub, Confluence, SP, Slack, Okta). Finalize use cases via POC with AI council. Self-hosting mandatory. MCP compatibility required. Modularity (no vendor lock-in).</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">D — Decision Process <div class="score-dot score-yellow"></div></div>
+        <div class="medd-value">Committee of 3 exec sponsors must approve. Runs through SIE's IT governance / MC process. Out-of-cycle budget requires reforecast approval. Funding mechanism unclear — Darrell clarifying how approvals flow through Dave and Ajoi's orgs.</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">P — Paper Process <div class="score-dot score-green"></div></div>
+        <div class="medd-value">AWS Marketplace. 3-year contract. MNDA: Done. MSA: Starting. Infosec: In Progress. Approved quote: $2.5M (Platform). Pre-negotiated $20/user/month rate valid for expansion.</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">I — Identify Pain <div class="score-dot score-green"></div></div>
+        <div class="medd-value">Well documented: search gap (Salil confirmed "burning need"), MCP sprawl governance failure, ChatGPT that can't access internal data, years of failed DIY, PS6 engineering velocity urgency.</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">C — Champion <div class="score-dot score-red"></div></div>
+        <div class="medd-value">No confirmed champion with authority. Darrell: willing but new. Salil: sporadic. Daniel: engaging but limited authority. Critical gap — must develop champion or find one.</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">C — Competition <div class="score-dot score-yellow"></div></div>
+        <div class="medd-value">Moveworks (bundled free w/ ServiceNow), ChatGPT Enterprise (incumbent, failing), DIY/Build (active but failing), ROVO (Atlassian). Glean's Bungie proof is unmatched inside Sony.</div>
+      </div>
+      <div class="medd-item">
+        <div class="medd-label">S — Sponsors <div class="score-dot score-yellow"></div></div>
+        <div class="medd-value">Darrell working to brief Michael Williams (Bungie). Need Bungie peer-to-peer validation at VP level (Dave ↔ Michael Williams / Darla). Varun Tilva (BVC) as consulting resource adds exec credibility.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ NEXT STEPS ═══ -->
+  <div class="section" id="nextsteps">
+    <div class="section-title"><span class="icon">🚀</span> Recommended Next Steps</div>
+
+    <ul class="step-list">
+      <li class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Present v1 Business Case to Daniel + Salil</div>
+          <div class="step-body">Darrell presenting the first draft BC (search productivity + tool consolidation + workflow optimization) to Daniel and Salil. Oren brings Varun Tilva (BVC) to the meeting. Goal: validate the model, add department-level data from Darrell, align on exec presentation format.</div>
+          <div class="step-owner">Owner: Darrell Rangel + Oren Yomorta + Varun Tilva · Target: Week of June 9</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Validate Bungie ROI Numbers with Darla</div>
+          <div class="step-body">Darrell sets up a separate call with Darla at Bungie (including Oren) to sanity-check financial numbers and get customer-approved data for the executive presentation. Survey baseline: 130 users, 1–2 hrs/week saved. Need Darla's sign-off for credibility with SIE leadership.</div>
+          <div class="step-owner">Owner: Darrell Rangel + Oren Yomorta · Target: Before Daniel meeting</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Get Jason Ahrens' ChatGPT + Slack AI Spend Data</div>
+          <div class="step-body">Darrell is quarterbacking this with Jason Ahrens. This data fuels the $2.8M tool consolidation pillar. Critical for hard-dollar case that covers the full $5M ask. Also include any other redundant AI tools (Slack AI, internal search tools, etc.).</div>
+          <div class="step-owner">Owner: Darrell Rangel (Jason Ahrens) · Target: Before BC finalization</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Brief Michael Williams (Bungie) for Peer Validation</div>
+          <div class="step-body">Darrell meets with Michael Williams (now filling Aldridge's role at Bungie) to discuss how to bring Bungie's positive experience directly to SIE's decision-makers. Goal: Peer-to-peer validation at VP level — Michael to Dave Gardner channel.</div>
+          <div class="step-owner">Owner: Darrell Rangel · Target: Week of June 9</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Activate AWS Credits Angle with Tracey Dwyer</div>
+          <div class="step-body">Tracey Dwyer (AWS PAM) has strategic investment credits available that could apply to Glean's AWS deployment — potentially reducing SIE's out-of-pocket cost significantly. The credit deadline was July (potentially extended). Coordinate with Tracey to quantify and include in the BC as a cost offset. This could be the creative funding mechanism Darrell needs.</div>
+          <div class="step-owner">Owner: Oren Yomorta + AWS channel (Samir Aljabar) · Target: Week of June 9</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Prepare Anonymized Peer Case Studies for Daniel</div>
+          <div class="step-body">Daniel explicitly requested anonymized peer case studies (not Forrester) from gaming/media/consumer-tech. Pull together: Riot Games (gaming, April 2026), Bungie (sanitized), NVIDIA (engineering DIY-displacement), LinkedIn (beat Copilot, $1.5M savings). Format as a concise 2-slide appendix for the BC presentation.</div>
+          <div class="step-owner">Owner: Vinny Thanh + Oren Yomorta · Target: Before Daniel meeting</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <div class="step-title">Align Salil on Control Plane / MCP Workstream (Separate Track)</div>
+          <div class="step-body">Salil wants a separate conversation on the control plane and ecosystem integration (distinct from the search BC). Darrell to schedule this. Use Glean's MCP server story + Bungie's Asana + GitHub MCP deployments as proof. Salil confirmed: "As long as Glean moves away from connector-only approach and allows MCP interaction, the proposition is strong."</div>
+          <div class="step-owner">Owner: Darrell Rangel + Salil Joshi + Oren/Vinny · Target: Schedule now for mid-June</div>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">8</div>
+        <div class="step-content">
+          <div class="step-title">Re-engage Dave Gardner with Polished BC (Not a Demo)</div>
+          <div class="step-body">Dave's April 1 feedback: demo missed the mark. Don't demo. Come with the polished 3-pillar business case + Bungie validation + peer reference data. Request the meeting through Daniel or Darrell, not direct email. Bring the $6.2M vs $5M hard dollar case plus the PS6 development urgency framing.</div>
+          <div class="step-owner">Owner: Oren Yomorta (via Darrell/Daniel) · Target: Late June / July</div>
+        </div>
+      </li>
+    </ul>
+
+    <hr class="divider">
+    <div class="section-title"><span class="icon">💬</span> Recommended Messaging for Dave Gardner</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="quote-block" style="font-style:normal;">
+          "Dave, I know you want to orchestrate and automate across all of SIE's teams — not just flip AI switches that don't connect. Bungie deployed Glean with 1,400 users and is seeing 60% daily adoption, $1.8M in efficiency savings, and near-zero engineering Q&amp;A interruptions. That's inside Sony's own ecosystem. The business case shows $6.2M in hard savings against a $5M ask — search productivity, tool consolidation, and the ITSM automation your GSO-IM team needs. You get Glean self-hosted in your AWS account, so classified data never leaves SIE's perimeter. And you get a governed AI control plane that replaces the 50+ disconnected MCP integrations your teams are building right now — with one platform that handles search, agents, and orchestration across all departments. Bungie already proved it works for PlayStation. We're ready to prove it for SIE."
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+    var tab = document.querySelector('.tab[onclick*="' + id + '"]');
+    var sec = document.getElementById(id);
+    if (tab) tab.classList.add('active');
+    if (sec) sec.classList.add('active');
+  }
+
+  // PDF export
+  window.GleanBridge.postMessage({
+    actionId: 'export-pdf',
+    type: 'glean-add-menu',
+    metadata: { label: 'Export as PDF', icon: 'export' }
+  });
+  window.GleanBridge.onMessage('action', function(data) {
+    if (data.actionId === 'export-pdf') window.print();
+  });
+</script>
+</body>
+</html>
